@@ -11,15 +11,11 @@ const bookRouter = require("./routes/book.routes");
 const { validateToken } = require("./controllers/auth.controller");
 // const authRouter = require("./routes/auth.routes");
 
-console.log(process.env.PORT);
-
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-
-console.log(process.env.CORS);
 
 app.use(
   cors({

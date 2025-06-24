@@ -7,6 +7,7 @@ import Home from "./Pages/Home";
 import CheckLoginInfo from "./Components/CheckLoginInfo";
 import PageNotFound from "./Pages/PageNotFound";
 import AddBook from "./Pages/AddBook";
+import About from "./Pages/About";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -25,6 +26,7 @@ const App = () => {
           path="/addBook"
           element={<PrivateRoute element={<AddBook />} />}
         />
+        <Route path="/about" element={<PrivateRoute element={<About />} />} />
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>

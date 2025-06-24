@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { BASE_URL, currentUser } from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 import { useUser } from "../utils/UserContext";
 
 const CheckLoginInfo = ({ setIsAuthenticated }) => {
@@ -20,18 +20,16 @@ const CheckLoginInfo = ({ setIsAuthenticated }) => {
       try {
         const response = await axios.get(`${BASE_URL}/api/validate-token`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            authorization: `Bearer ${token}`,
           },
         });
         if (response.status >= 200 && response.status < 300) {
-          const { email } = response.data.User;
-          currentUser = email;
-          setCurrentUser(email);
-          console.log("currentUser: ", currentUser);
+          const { email, fullName } = response.data.User;
+          setCurrentUser({ email, fullName });
         }
-
         // Token is valid
         setIsAuthenticated(true);
+
         if (location.pathname === "/" || location.pathname === "/login") {
           navigate("/home");
         }
@@ -43,7 +41,7 @@ const CheckLoginInfo = ({ setIsAuthenticated }) => {
     };
 
     checkToken();
-  }, []);
+  }, [location]);
 
   return null;
 };

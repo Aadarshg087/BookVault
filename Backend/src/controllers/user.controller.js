@@ -33,9 +33,13 @@ async function createUser(req, res) {
       password,
     });
     const { _id } = createdUser;
-    const token = await jwt.sign({ _id, email }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_TIMEOUT,
-    });
+    const token = await jwt.sign(
+      { _id, email, fullName },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_TIMEOUT,
+      }
+    );
 
     return res.status(200).json({ createdUser, token });
   } catch (error) {
@@ -65,10 +69,14 @@ async function LoginUser(req, res) {
         message: "Wrong Credentials!",
       });
     }
-    const { _id } = LoggedInUser;
-    const token = await jwt.sign({ _id, email }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_TIMEOUT,
-    });
+    const { _id, fullName } = LoggedInUser;
+    const token = await jwt.sign(
+      { _id, email, fullName },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_TIMEOUT,
+      }
+    );
 
     return res.status(200).json({ LoggedInUser, token });
   } catch (error) {

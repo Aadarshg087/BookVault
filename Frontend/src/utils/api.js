@@ -1,4 +1,5 @@
 import { BASE_URL } from "./constants";
+import axios from "axios";
 
 const token = localStorage.getItem("userInfo");
 
