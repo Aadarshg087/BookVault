@@ -9,8 +9,8 @@ const User = require("../models/user.models");
 
 async function addBook(req, res) {
   try {
-    let { bookTitle, bookAuthor, status, description, user } = req.body;
-    if (!bookTitle || !status || !bookAuthor) {
+    let { bookTitle, bookAuthor, description, category, user } = req.body;
+    if (!bookTitle || !bookAuthor) {
       return res.status(400).json({
         message: "All fields are required",
       });
@@ -28,8 +28,8 @@ async function addBook(req, res) {
     const entry = await Book.create({
       bookTitle,
       bookAuthor,
-      status,
       description,
+      category,
       user: currUserId._id,
     });
 
@@ -44,17 +44,16 @@ async function addBook(req, res) {
 
 async function getAllBooks(req, res) {
   try {
-    const currUser = "rahul@gmail.com";
+    const user = req.user;
     const currUserId = await User.findOne(
-      { email: currUser },
+      { email: user },
       { projection: { _id: 1 } }
     );
-
     const allBooks = await Book.find({ user: currUserId });
-
+    console.log(allBooks);
     return res.status(200).json(allBooks);
   } catch (error) {
-    console.log(`Erro in fetching the books ${error}`);
+    console.log(`Error in fetching the books ${error}`);
     return res.status(500).json({
       error: "Something went wrong",
     });

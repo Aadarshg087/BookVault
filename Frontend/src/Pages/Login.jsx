@@ -20,44 +20,59 @@ const Login = () => {
       localStorage.setItem("userInfo", token);
       navigate("/home");
     } catch (error) {
-      setErr(error.response.data.message);
+      setErr(error);
     }
   }
 
   return (
-    <div className="flex h-screen w-full items-center font-inter">
-      <div className="border-2 py-20 px-15 m-auto text-center space-y-10 rounded-md ">
+    <div className="flex flex-col h-screen w-full items-center gap-10 pt-20 font-inter bg-background text-font">
+      <h1 className="text-center text-5xl italic font-bold">BookVault</h1>
+      <div className="border-1 pt-10 pb-10 flex flex-col items-center   text-center space-y-10 rounded-2xl bg-gradient-to-t from-[#0e0e0e]  to-[#3f3f3f]">
         <h2 className="font-bold text-3xl">Welcome Back</h2>
         <div className="flex">
           <form
             action=""
             onSubmit={handleSubmit(onSubmission)}
-            className="flex flex-col gap-4 text-md"
+            className="flex flex-col gap-5 text-md  mx-10 min-x-[100px] w-[300px] "
           >
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start gap-2">
               <label htmlFor="">Email</label>
               <input
                 type="text"
-                className="outline px-1 rounded-md py-1"
+                placeholder="Enter email"
+                className="outline-none bg-background px-2 w-full rounded-md py-2 text-sm"
                 {...register("email", { required: "Email is required" })}
               />
-              {errors.email && <p>errors.email.message</p>}
+              {errors && (
+                <p className={`text-sm text-red-400 }`}>
+                  {errors.email?.message ? errors.email.message : "\u00A0"}
+                </p>
+              )}
             </div>
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start gap-2">
               <label htmlFor="">Password</label>
               <input
-                className="outline px-1 rounded-md py-1"
+                placeholder="Enter password"
+                className="outline-none bg-background px-2 w-full rounded-md py-2 text-sm"
                 type="password"
                 {...register("password", { required: "Password is required" })}
               />
-              {errors.password && <p>errors.password.message</p>}
+              {errors && (
+                <p className="text-sm text-red-400">
+                  {errors.password?.message
+                    ? errors.password.message
+                    : "\u00A0"}
+                </p>
+              )}
             </div>
-            {err ? <p className="text-red-500  text-md ">{err}</p> : null}
+            {err && <p className="text-sm text-red-500">{err}</p>}
             <button
               type="submit"
-              className="text-font w-fit m-auto px-10 py-1 bg-primary hover:bg-font hover:text-primary hover:outline duration-150  mt-2 rounded-md"
+              className="bg-white h-fit w-fit m-auto font-bold  mt-2 rounded-md cursor-pointer hover:bg-gradient-to-r hover:from-login-botton-light hover:to-login-button  transition-all "
             >
-              Log In
+              <span className="px-15 py-1 block  bg-gradient-to-r from-login-botton-light to-login-button bg-clip-text text-transparent hover:bg-none hover:text-white hover:px-20 transition-all duration-400  ease-in-out  ">
+                Log In
+              </span>
             </button>
           </form>
         </div>

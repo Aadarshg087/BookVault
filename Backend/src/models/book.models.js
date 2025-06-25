@@ -15,15 +15,12 @@ const bookSchema = mongoose.Schema(
       trim: true,
       index: true,
     },
-    status: {
-      type: String,
-      enum: ["Reading", "Finished", "In Queue"],
-      default: "In Queue",
-      required: true,
-    },
     description: {
       type: String,
       default: "No description is provided for this book",
+    },
+    category: {
+      type: [String],
     },
     notes: {
       type: String,

@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Components/Header";
 import { Link } from "react-router-dom";
+import { useUser } from "../utils/UserContext";
+import api from "../utils/api";
 
 const Home = () => {
-  const bookList = [
+  const { currentUser } = useUser();
+  const [bookList, setBookList] = useState([]);
+  useEffect(() => {
+    const getBooks = async () => {
+      try {
+        const books = await api.get("/books/getAllBooks");
+
+        setBookList(books.data);
+        console.log(books.data);
+        console.log(bookList.data);
+      } catch (error) {
+        console.log("Error in getting the books", error);
+      }
+    };
+    getBooks();
+  }, []);
+  const boookList = [
     { bookTitle: "Tools of Titans", bookAuthor: "Tim Ferris" },
     { bookTitle: "Atomic Habits", bookAuthor: "James Clear" },
     { bookTitle: "Do Epic Shit", bookAuthor: "Ankur Warikoo" },
@@ -19,7 +37,7 @@ const Home = () => {
         <div className=" w-full text-5xl pt-20 font-bold">
           Welcome{" "}
           <span className="bg-gradient-to-l from-accent  to-accent-other bg-clip-text text-transparent">
-            Aadarsh!
+            {currentUser?.fullName}!
           </span>
         </div>
         <div className="flex flex-col space-y-4 ">
@@ -58,17 +76,26 @@ const Home = () => {
           </select>
         </div>
         <div className="flex gap-6 flex-wrap">
-          {bookList.map((item, index) => {
-            return (
-              <Link
-                key={index}
-                className={`min-w-[300px] outline-1 h-[350px] flex flex-col items-start justify-end pl-6 pb-6 bg-white rounded-3xl bg-gradient-to-t from-black/100 via-black/50 to-transparent z-10`}
-              >
-                <p className="text-2xl font-bold">{item.bookTitle}</p>
-                <p className="text-font-muted text-sm">by {item.bookAuthor}</p>
-              </Link>
-            );
-          })}
+          {bookList.length === 0 ? (
+            <div className="font-inter text-font-muted w-full text-center ">
+              No books here!
+            </div>
+          ) : (
+            bookList.map((item, index) => {
+              return (
+                <Link
+                  key={index}
+                  to={""}
+                  className={`min-w-[300px] outline-1 h-[350px] flex flex-col items-start justify-end pl-6 pb-6 bg-white rounded-3xl bg-gradient-to-t from-black/100 via-black/50 to-transparent z-10 mb-10`}
+                >
+                  <p className="text-2xl font-bold">{item.bookTitle}</p>
+                  <p className="text-font-muted text-sm">
+                    by {item.bookAuthor}
+                  </p>
+                </Link>
+              );
+            })
+          )}
         </div>
       </div>
     </div>

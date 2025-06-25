@@ -12,6 +12,8 @@
   --color-font-muted: hsl(0, 0%, 70%);
   --color-accent: #2a44d3;
   --color-accent-other: #8793d9;
+  --color-login-button: #00148f;
+  --color-login-botton-light: #6a77c2;
 }
 
 body {

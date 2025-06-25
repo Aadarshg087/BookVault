@@ -1,11 +1,12 @@
 import React from "react";
 import Header from "../Components/Header";
 import { useForm } from "react-hook-form";
-import { BASE_URL } from "../utils/constants";
 import { useUser } from "../utils/UserContext";
 import api from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 const AddBook = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -13,10 +14,17 @@ const AddBook = () => {
   } = useForm();
   const { currentUser } = useUser();
   async function onSubmission(data) {
-    const details = { ...data, user: currentUser };
+    const details = { ...data, user: currentUser.email };
     console.log(details);
-
-    const res = api.post("/book/addBook", details);
+    try {
+      console.log(details);
+      const res = await api.post("/books/addBook", details);
+      if (res.status >= 200 && res.status < 300) {
+        navigate("/home");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
