@@ -24,8 +24,8 @@ const CheckLoginInfo = ({ setIsAuthenticated }) => {
           },
         });
         if (response.status >= 200 && response.status < 300) {
-          const { email, fullName } = response.data.User;
-          setCurrentUser({ email, fullName });
+          const { _id, email, fullName } = response.data.User;
+          setCurrentUser({ _id, email, fullName });
         }
         // Token is valid
         setIsAuthenticated(true);

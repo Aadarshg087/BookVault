@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const morgan = require("morgan");
 
 // local function imports
 const connectDB = require("./database/index");
@@ -31,6 +32,11 @@ connectDB()
     console.log(`Some error occured in the server`);
   });
 
+// morgan(":method :url :status :res[content-length] - :response-time ms");
+// app.use(morgan("tiny"));
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms")
+);
 //   Routes
 // auth
 app.get("/api/validate-token", validateToken);

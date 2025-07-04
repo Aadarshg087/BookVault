@@ -9,7 +9,7 @@ const User = require("../models/user.models");
 
 async function addBook(req, res) {
   try {
-    let { bookTitle, bookAuthor, description, category, user } = req.body;
+    let { bookTitle, bookAuthor, description, category, userEmail } = req.body;
     if (!bookTitle || !bookAuthor) {
       return res.status(400).json({
         message: "All fields are required",
@@ -18,18 +18,19 @@ async function addBook(req, res) {
 
     // const currUser = req.user; // middleware part
     // const currUser = "rahul@gmail.com";
-    if (!user) {
+    if (!userEmail) {
       return res.status(400).json({
         message: "User must be logged in",
       });
     }
 
-    const currUserId = await User.findOne({ email: user });
+    const currUserId = await User.findOne({ email: userEmail });
     const entry = await Book.create({
       bookTitle,
       bookAuthor,
       description,
       category,
+      notes: "",
       user: currUserId._id,
     });
 
@@ -44,7 +45,7 @@ async function addBook(req, res) {
 
 async function getAllBooks(req, res) {
   try {
-    const user = req.user;
+    const user = req.userEmail;
     const currUserId = await User.findOne(
       { email: user },
       { projection: { _id: 1 } }
@@ -60,4 +61,48 @@ async function getAllBooks(req, res) {
   }
 }
 
-module.exports = { addBook, getAllBooks };
+async function getBookDetails(req, res) {
+  try {
+    const { bookId } = req.body;
+    const userId = req.userId;
+    if (!userId || !bookId) {
+      res.status(400).json({ message: "Both user ID and Book ID is required" });
+    }
+
+    const details = await Book.findOne({ _id: bookId, user: userId });
+
+    return res.status(200).json(details);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      error: "Something went wrong",
+    });
+  }
+}
+
+async function saveNotes(req, res) {
+  try {
+    const userId = req.userId;
+    if (!userId) {
+      return res.status(400).json({
+        message: "User must be loggedIn",
+      });
+    }
+    const bookId = req.body._id;
+    const { notes } = req.body;
+    const isSaved = await Book.findByIdAndUpdate(
+      bookId,
+      { notes: notes },
+      { new: true }
+    );
+    console.log(isSaved);
+    return res.status(200).json(isSaved);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      error: "Something went wrong",
+    });
+  }
+}
+
+module.exports = { addBook, getAllBooks, getBookDetails, saveNotes };

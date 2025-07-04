@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Components/Header";
 import { useForm } from "react-hook-form";
 import { useUser } from "../utils/UserContext";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const AddBook = () => {
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -107,7 +108,7 @@ const AddBook = () => {
             </div>
             <button
               type="submit"
-              className="text-font text-lg font-semibold outline-none bg-accent  px-10 py-2   bg-primary hover:bg-accent/45 hover:text-white hover:outline-2 duration-300 rounded-2xl h-fit"
+              className="text-font text-lg font-semibold outline-none bg-accent  px-10 py-2   bg-primary hover:bg-accent/45 hover:text-white hover:outline-2 duration-300 rounded-2xl h-fit cursor-pointer"
             >
               Add Book
             </button>

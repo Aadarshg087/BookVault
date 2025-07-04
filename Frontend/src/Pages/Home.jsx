@@ -7,11 +7,11 @@ import api from "../utils/api";
 const Home = () => {
   const { currentUser } = useUser();
   const [bookList, setBookList] = useState([]);
+
   useEffect(() => {
     const getBooks = async () => {
       try {
         const books = await api.get("/books/getAllBooks");
-
         setBookList(books.data);
         console.log(books.data);
         console.log(bookList.data);
@@ -69,7 +69,9 @@ const Home = () => {
             default="Select Category"
             className="border-1 text-sm bg-bg-light w-fit px-4 py-1 rounded-md text-font-muted"
           >
-            <option value="In Queue">Select Catogory</option>
+            <option value="In Queue" onClick={() => getCategoryBooks("All")}>
+              Select Catogory
+            </option>
             <option value="In Queue">In Queue</option>
             <option value="Reading">Reading</option>
             <option value="Finished">Finished</option>
@@ -85,7 +87,7 @@ const Home = () => {
               return (
                 <Link
                   key={index}
-                  to={""}
+                  to={`/view/${item._id}`}
                   className={`min-w-[300px] outline-1 h-[350px] flex flex-col items-start justify-end pl-6 pb-6 bg-white rounded-3xl bg-gradient-to-t from-black/100 via-black/50 to-transparent z-10 mb-10`}
                 >
                   <p className="text-2xl font-bold">{item.bookTitle}</p>

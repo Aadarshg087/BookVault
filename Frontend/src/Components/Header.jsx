@@ -27,7 +27,7 @@ const Header = () => {
     },
   ];
   return (
-    <div className="min-w-full font-inter flex justify-between border-1 bg-background border-b-gray-500  px-40 font-medium items-center py-4 text-base">
+    <div className="min-w-full font-inter flex justify-between border-b-1 bg-background border-b-gray-500  px-40 font-medium items-center py-4 text-base">
       <div className="text-2xl font-inter font-black text-font ">
         <Link to={"/home"}> BookVault</Link>
       </div>

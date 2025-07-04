@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
-
+import { Link } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const [err, setErr] = useState(null);
@@ -33,7 +33,7 @@ const Login = () => {
           <form
             action=""
             onSubmit={handleSubmit(onSubmission)}
-            className="flex flex-col gap-5 text-md  mx-10 min-x-[100px] w-[300px] "
+            className="flex flex-col space-y-2 text-md  mx-10 min-x-[100px] w-[300px] "
           >
             <div className="flex flex-col items-start gap-2">
               <label htmlFor="">Email</label>
@@ -66,14 +66,27 @@ const Login = () => {
               )}
             </div>
             {err && <p className="text-sm text-red-500">{err}</p>}
-            <button
+
+            {/* <button
               type="submit"
               className="bg-white h-fit w-fit m-auto font-bold  mt-2 rounded-md cursor-pointer hover:bg-gradient-to-r hover:from-login-botton-light hover:to-login-button  transition-all "
             >
               <span className="px-15 py-1 block  bg-gradient-to-r from-login-botton-light to-login-button bg-clip-text text-transparent hover:bg-none hover:text-white hover:px-20 transition-all duration-400  ease-in-out  ">
                 Log In
               </span>
+            </button> */}
+            <button
+              type="submit"
+              className="text-font w-fit  px-10 py-1 bg-primary  duration-400  mt-2 rounded-md outline hover:bg-white hover:text-background hover:px-12 cursor-pointer m-auto font-medium"
+            >
+              Log In
             </button>
+            <Link
+              to={"/register"}
+              className="text-xs text-accent-other underline mt-2"
+            >
+              Create Account?
+            </Link>
           </form>
         </div>
       </div>

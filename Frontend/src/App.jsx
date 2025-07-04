@@ -8,6 +8,8 @@ import CheckLoginInfo from "./Components/CheckLoginInfo";
 import PageNotFound from "./Pages/PageNotFound";
 import AddBook from "./Pages/AddBook";
 import About from "./Pages/About";
+import EditNotes from "./Pages/EditNotes";
+import ViewNotes from "./Pages/ViewNotes";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -27,6 +29,14 @@ const App = () => {
           element={<PrivateRoute element={<AddBook />} />}
         />
         <Route path="/about" element={<PrivateRoute element={<About />} />} />
+        <Route
+          path="/edit/:id"
+          element={<PrivateRoute element={<EditNotes />} />}
+        />
+        <Route
+          path="/view/:id"
+          element={<PrivateRoute element={<ViewNotes />} />}
+        />
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
