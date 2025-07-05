@@ -1,8 +1,8 @@
-import React, { useImperativeHandle } from "react";
+import React, { useImperativeHandle, useState } from "react";
 import { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 
-const MyEditor = React.forwardRef((content, ref) => {
+const MyEditor = React.forwardRef(({ content }, ref) => {
   const editorRef = useRef(null);
   const log = () => {
     if (editorRef.current) {
@@ -15,17 +15,22 @@ const MyEditor = React.forwardRef((content, ref) => {
   //     editor.current.setContent(content);
   //   }
   // };
-  
+  const [isReady, setIsReady] = useState(false);
   useImperativeHandle(ref, () => ({
     getContent: () => editorRef.current?.getContent(),
     setContent: (value) => editorRef.current?.setContent(value),
+    isReady: () => isReady,
   }));
 
   return (
     <>
       <Editor
         apiKey="qg0ldwuewf48f2gxed724l4xwly6445a6o4pzixbjyrvv8hj"
-        onInit={(_evt, editor) => (editorRef.current = editor)}
+        onInit={(_evt, editor) => {
+          editorRef.current = editor;
+          setIsReady(true);
+        }}
+        initialValue={content}
         init={{
           height: 600,
           menubar: false,
@@ -61,7 +66,7 @@ const MyEditor = React.forwardRef((content, ref) => {
             "body { font-family:Inter,Arial,sans-serif; font-size:16px }",
         }}
       />
-      <button onClick={log}>Log editor content</button>
+      {/* <button onClick={log}>Log editor content</button> */}
     </>
   );
 });

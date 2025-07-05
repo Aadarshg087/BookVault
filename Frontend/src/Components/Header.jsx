@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  function logout() {
+    localStorage.clear();
+  }
   const elements = [
     { Name: "Home", url: "/home" },
     { Name: "Add Book", url: "/addBook" },
@@ -15,6 +18,7 @@ const Header = () => {
           strokeWidth={1.5}
           stroke="currentColor"
           className="size-6"
+          onClick={logout}
         >
           <path
             strokeLinecap="round"
@@ -23,7 +27,7 @@ const Header = () => {
           />
         </svg>
       ),
-      url: "/my-profile",
+      url: "/login",
     },
   ];
   return (

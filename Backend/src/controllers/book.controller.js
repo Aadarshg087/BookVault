@@ -9,7 +9,8 @@ const User = require("../models/user.models");
 
 async function addBook(req, res) {
   try {
-    let { bookTitle, bookAuthor, description, category, userEmail } = req.body;
+    let { bookTitle, bookAuthor, description, category } = req.body;
+    const userEmail = req.userEmail;
     if (!bookTitle || !bookAuthor) {
       return res.status(400).json({
         message: "All fields are required",
