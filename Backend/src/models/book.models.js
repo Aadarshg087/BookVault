@@ -21,6 +21,7 @@ const bookSchema = mongoose.Schema(
     },
     category: {
       type: [String],
+      index: true,
     },
     notes: {
       type: String,

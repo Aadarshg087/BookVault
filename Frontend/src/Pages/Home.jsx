@@ -9,6 +9,8 @@ const Home = () => {
   const { currentUser } = useUser();
   const [bookList, setBookList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState(["All"]);
+  const [currentCategory, setCurrentCategory] = useState("All");
 
   useEffect(() => {
     // if (!currentUser) return;
@@ -19,6 +21,11 @@ const Home = () => {
         const books = await api.get("/books/getAllBooks");
         setBookList(books.data);
 
+        const cat = await api.get("/books/getAllCategories");
+        // cat.data.push("All");
+        // console.log(cat.data);
+        setCategories(["All", ...cat.data]);
+
         // console.log(books.data);
         // console.log(bookList.data);
       } catch (error) {
@@ -28,6 +35,19 @@ const Home = () => {
     getBooks();
     setLoading(false);
   }, [currentUser]);
+
+  const handleCategory = async (currentCat) => {
+    try {
+      const getBooks = await api.post("/books/getCategoryBooks", {
+        category: currentCat,
+      });
+      console.log("getBooks", getBooks);
+      setBookList(getBooks.data);
+      setCurrentCategory(currentCat);
+    } catch (error) {
+      console.log("Got some error in fetching the category books", error);
+    }
+  };
 
   // const boookList = [
   //   { bookTitle: "Tools of Titans", bookAuthor: "Tim Ferris" },
@@ -87,10 +107,11 @@ const Home = () => {
               </div>
 
               <select
-                default="Select Category"
-                className="border-1 text-sm bg-bg-light w-fit px-4 py-1 rounded-md text-font-muted"
+                // defaultValue={currentCategory}
+                onChange={(e) => handleCategory(e.target.value)}
+                className="border-1 text-sm bg-bg-light w-fit px-4 py-1 rounded-md text-font-muted cursor-pointer"
               >
-                <option
+                {/* <option
                   value="In Queue"
                   onClick={() => getCategoryBooks("All")}
                 >
@@ -98,13 +119,23 @@ const Home = () => {
                 </option>
                 <option value="In Queue">In Queue</option>
                 <option value="Reading">Reading</option>
-                <option value="Finished">Finished</option>
+                <option value="Finished">Finished</option> */}
+
+                {categories.map((item, index) => {
+                  return (
+                    <option value={item} key={index}>
+                      {item}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className="flex gap-6 flex-wrap">
               {bookList.length === 0 ? (
                 <div className="font-inter text-font-muted w-full text-center ">
-                  No books here!
+                  {currentCategory === "All"
+                    ? "No books here, yet!"
+                    : "No books found!"}
                 </div>
               ) : (
                 bookList.map((item, index) => {

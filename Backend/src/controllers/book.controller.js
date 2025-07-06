@@ -4,6 +4,7 @@
 // change status
 // need to implement the middleware to get the current user
 
+const { mongoose } = require("mongoose");
 const Book = require("../models/book.models");
 const User = require("../models/user.models");
 
@@ -24,13 +25,14 @@ async function addBook(req, res) {
         message: "User must be logged in",
       });
     }
+    const cat = category.split(",").map((ele) => ele.trim());
 
     const currUserId = await User.findOne({ email: userEmail });
     const entry = await Book.create({
       bookTitle,
       bookAuthor,
       description,
-      category,
+      category: cat,
       notes: "",
       user: currUserId._id,
     });
@@ -106,4 +108,55 @@ async function saveNotes(req, res) {
   }
 }
 
-module.exports = { addBook, getAllBooks, getBookDetails, saveNotes };
+async function getAllCategories(req, res) {
+  try {
+    const userId = new mongoose.Types.ObjectId(req.userId);
+    console.log(typeof userId);
+    const categories = await Book.aggregate([
+      { $match: { user: userId } },
+      { $unwind: "$category" },
+      { $group: { _id: null, uniqueCategories: { $addToSet: "$category" } } },
+      { $project: { _id: 0, uniqueCategories: 1 } },
+    ]);
+
+    return res.status(200).json(categories[0].uniqueCategories);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      error: "Somehting went wrong",
+    });
+  }
+}
+
+async function getCategoryBooks(req, res) {
+  try {
+    const userId = new mongoose.Types.ObjectId(req.userId);
+    const { category } = req.body;
+    if (category === "All") {
+      const books = await Book.find({
+        user: userId,
+      });
+      return res.status(200).json(books);
+    }
+
+    const categoryBooks = await Book.find({
+      user: userId,
+      category,
+    });
+    return res.status(200).json(categoryBooks);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      error: "Something went wrong",
+    });
+  }
+}
+
+module.exports = {
+  addBook,
+  getAllBooks,
+  getBookDetails,
+  saveNotes,
+  getAllCategories,
+  getCategoryBooks,
+};
