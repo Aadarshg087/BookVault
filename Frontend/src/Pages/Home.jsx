@@ -54,8 +54,8 @@ const Home = () => {
       const resultBooks = await api.post("/books/searchBooks", {
         searchString,
       });
-      setCurrentSearchString(searchString);
       // console.log(resultBooks.data);
+      setCurrentSearchString(searchString);
       setBookList(resultBooks.data);
     } catch (error) {
       console.log("Got some error fetching searched items: ", error);
