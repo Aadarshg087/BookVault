@@ -152,6 +152,23 @@ async function getCategoryBooks(req, res) {
   }
 }
 
+async function searchBooks(req, res) {
+  try {
+    const userId = new mongoose.Types.ObjectId(req.userId);
+    const { searchString } = req.body;
+    const books = await Book.find({
+      user: userId,
+      bookTitle: { $regex: searchString, $options: "i" },
+    });
+    return res.status(200).json(books);
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({
+      error: "Something went wrong",
+    });
+  }
+}
+
 module.exports = {
   addBook,
   getAllBooks,
@@ -159,4 +176,5 @@ module.exports = {
   saveNotes,
   getAllCategories,
   getCategoryBooks,
+  searchBooks,
 };

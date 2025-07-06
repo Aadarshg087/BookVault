@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "../utils/UserContext";
 import { motion } from "framer-motion";
 import Header from "../Components/Header";
@@ -11,6 +11,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState(["All"]);
   const [currentCategory, setCurrentCategory] = useState("All");
+  const [currentSearchString, setCurrentSearchString] = useState("");
 
   useEffect(() => {
     // if (!currentUser) return;
@@ -41,11 +42,23 @@ const Home = () => {
       const getBooks = await api.post("/books/getCategoryBooks", {
         category: currentCat,
       });
-      console.log("getBooks", getBooks);
       setBookList(getBooks.data);
       setCurrentCategory(currentCat);
     } catch (error) {
       console.log("Got some error in fetching the category books", error);
+    }
+  };
+
+  const handleSearchString = async (searchString) => {
+    try {
+      const resultBooks = await api.post("/books/searchBooks", {
+        searchString,
+      });
+      setCurrentSearchString(searchString);
+      // console.log(resultBooks.data);
+      setBookList(resultBooks.data);
+    } catch (error) {
+      console.log("Got some error fetching searched items: ", error);
     }
   };
 
@@ -86,6 +99,9 @@ const Home = () => {
                 <input
                   type="text"
                   placeholder="Search your books here!"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSearchString(e.target.value);
+                  }}
                   className="w-full rounded-3xl pl-4 pr-10 text-md py-3 bg-bg-light text-font font-light outline-none"
                 />
                 <button>
@@ -107,20 +123,9 @@ const Home = () => {
               </div>
 
               <select
-                // defaultValue={currentCategory}
                 onChange={(e) => handleCategory(e.target.value)}
                 className="border-1 text-sm bg-bg-light w-fit px-4 py-1 rounded-md text-font-muted cursor-pointer"
               >
-                {/* <option
-                  value="In Queue"
-                  onClick={() => getCategoryBooks("All")}
-                >
-                  Select Catogory
-                </option>
-                <option value="In Queue">In Queue</option>
-                <option value="Reading">Reading</option>
-                <option value="Finished">Finished</option> */}
-
                 {categories.map((item, index) => {
                   return (
                     <option value={item} key={index}>
@@ -133,7 +138,7 @@ const Home = () => {
             <div className="flex gap-6 flex-wrap">
               {bookList.length === 0 ? (
                 <div className="font-inter text-font-muted w-full text-center ">
-                  {currentCategory === "All"
+                  {currentCategory === "All" && currentSearchString === ""
                     ? "No books here, yet!"
                     : "No books found!"}
                 </div>
@@ -143,7 +148,7 @@ const Home = () => {
                     <Link
                       key={index}
                       to={`/view/${item._id}`}
-                      className={`min-w-[300px] outline-1 h-[350px] flex flex-col items-start justify-end pl-6 pb-6 bg-white rounded-3xl bg-gradient-to-t from-black/100 via-black/50 to-transparent z-10 mb-10`}
+                      className={`min-w-[300px] outline-1 h-[350px] flex flex-col items-start justify-end pl-6 pb-6 bg-white rounded-3xl bg-gradient-to-t from-black/100 via-black/50 to-transparent z-10 mb-10 hover:bg-gradient-to-t hover:from-black/95 hover:via-black/50 hover:to-transparent `}
                     >
                       <p className="text-2xl font-bold">{item.bookTitle}</p>
                       <p className="text-font-muted text-sm">
