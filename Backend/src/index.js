@@ -10,7 +10,6 @@ const connectDB = require("./database/index");
 const { userRouter } = require("./routes/user.routes");
 const bookRouter = require("./routes/book.routes");
 const { validateToken } = require("./controllers/auth.controller");
-// const authRouter = require("./routes/auth.routes");
 
 const app = express();
 
@@ -20,11 +19,13 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   cors({
-    origin: process.env.CORS,
+    origin: "https://book-vault-frontend-ashen.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
+
+app.options("*", cors());
 
 connectDB()
   .then(() => {
