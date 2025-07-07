@@ -74,7 +74,7 @@ const ViewNotes = () => {
                 </div>
               ) : (
                 <div
-                  className="bg-bg-light mx-15 my-10 rounded-lg p-10 text-font text-center"
+                  className="bg-bg-light mx-15 my-10 rounded-lg p-10 text-font text-left"
                   dangerouslySetInnerHTML={{ __html: currentBook?.notes }}
                 ></div>
               )}
