@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../utils/UserContext";
 import api from "../utils/api";
 import { motion } from "framer-motion";
+import RenderHTML from "../Components/RenderHTML";
 
 const ViewNotes = () => {
   const [currentBook, setCurrentBook] = useState();
@@ -74,9 +75,10 @@ const ViewNotes = () => {
                 </div>
               ) : (
                 <div
-                  className="bg-bg-light mx-15 my-10 rounded-lg p-10 text-font text-left"
+                  className="prose prose-invert max-w-none bg-bg-light mx-15 my-10 rounded-lg p-10 text-font text-left"
                   dangerouslySetInnerHTML={{ __html: currentBook?.notes }}
-                ></div>
+                />
+                // <RenderHTML HTMLcontent={currentBook?.notes} />
               )}
             </div>
           </div>

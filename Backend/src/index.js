@@ -19,8 +19,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   cors({
-    origin: "https://book-vault-frontend-ashen.vercel.app",
-    // origin: process.env.CORS,
+    // origin: "https://book-vault-frontend-ashen.vercel.app",
+    origin: process.env.CORS,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })

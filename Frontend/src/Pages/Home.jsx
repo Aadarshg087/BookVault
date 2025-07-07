@@ -35,7 +35,7 @@ const Home = () => {
     };
     getBooks();
     setLoading(false);
-  }, [currentUser]);
+  }, []);
 
   const handleCategory = async (currentCat) => {
     try {

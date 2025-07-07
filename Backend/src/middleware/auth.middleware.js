@@ -5,8 +5,8 @@ function checkToken(req, res, next) {
   if (!token) return res.status(400).json({ message: "Unavailable Token" });
 
   try {
-    // console.log("details: ", token);
     const decode = jwt.verify(token, process.env.JWT_SECRET);
+    // console.log("details: ", token);
     // console.log("decode: ", decode);
     if (!decode) {
       return res

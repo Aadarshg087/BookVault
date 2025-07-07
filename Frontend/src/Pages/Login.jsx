@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
@@ -25,6 +25,18 @@ const Login = () => {
       setErr(error);
     }
   }
+
+  const loginAsJohnWalker = async () => {
+    const details = {
+      email: "John@gmail.com",
+      password: "John@gmail.com",
+    };
+    try {
+      await onSubmission(details);
+    } catch (error) {
+      setErr(error);
+    }
+  };
 
   return (
     <motion.div
@@ -93,10 +105,16 @@ const Login = () => {
               </button>
               <Link
                 to={"/register"}
-                className="text-xs text-accent-other underline mt-2"
+                className="text-xs text-accent-other underline mt-2 cursor-pointer"
               >
                 Create Account?
               </Link>
+              <div
+                className="text-xs text-accent-other underline mt-8 cursor-pointer hover:text-font-muted duration-150"
+                onClick={loginAsJohnWalker}
+              >
+                Login as John Walker
+              </div>
             </form>
           </div>
         </div>
