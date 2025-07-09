@@ -28,13 +28,13 @@ const ViewNotes = () => {
         console.log(res);
         if (res.status >= 200 && res.status < 300) {
           setCurrentBook(res.data);
+          setLoading(false);
         }
       } catch (error) {
         console.log("Getting error in fetching the current book: ", error);
       }
     }
     getCurrentBook();
-    setLoading(false);
   }, []);
 
   return (

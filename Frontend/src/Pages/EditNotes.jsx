@@ -26,6 +26,7 @@ const EditNotes = () => {
         console.log(res);
         if (res.status >= 200 && res.status < 300) {
           setCurrentBook(res.data);
+          setLoading(false);
         }
       } catch (error) {
         console.log("Getting error in fetching the current book: ", error);
@@ -33,7 +34,6 @@ const EditNotes = () => {
     }
 
     getNotes();
-    setLoading(false);
 
     // tinymce.activeEditor.setContent(currentBook.notes);
   }, []);
