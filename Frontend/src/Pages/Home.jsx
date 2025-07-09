@@ -21,6 +21,7 @@ const Home = () => {
         setLoading(true);
         const books = await api.get("/books/getAllBooks");
         setBookList(books.data);
+        setLoading(false);
 
         const cat = await api.get("/books/getAllCategories");
         // cat.data.push("All");
@@ -34,7 +35,6 @@ const Home = () => {
       }
     };
     getBooks();
-    setLoading(false);
   }, []);
 
   const handleCategory = async (currentCat) => {

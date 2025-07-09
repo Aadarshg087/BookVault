@@ -2,11 +2,14 @@ const jwt = require("jsonwebtoken");
 
 function checkToken(req, res, next) {
   const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(400).json({ message: "Unavailable Token" });
+  // console.log("Authorization header:", req.headers.authorization);  // *** learning curve
+
+  // console.log("token: ", token, typeof token);
+  if (!token || token === "null")
+    return res.status(400).json({ message: "Unavailable Token" });
 
   try {
     const decode = jwt.verify(token, process.env.JWT_SECRET);
-    // console.log("details: ", token);
     // console.log("decode: ", decode);
     if (!decode) {
       return res
@@ -19,7 +22,7 @@ function checkToken(req, res, next) {
     if (error.name === "TokenExpiredError") {
       return res.status(401).json({ message: "Token expired" });
     }
-    console.log(error);
+    console.log("error from backend code: ", error);
     return res.status(401).json({ message: "Invalid Token!" });
   }
   next();
