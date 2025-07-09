@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { motion } from "framer-motion";
+import ErrorModal from "../Components/ErrorModal";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Login = () => {
       localStorage.setItem("userInfo", token);
       navigate("/home");
     } catch (error) {
-      setErr(error);
+      setErr(error.response?.data?.message || "Something went wrong");
     }
   }
 
@@ -91,7 +92,7 @@ const Login = () => {
                   </p>
                 )}
               </div>
-              {err && <p className="text-sm text-red-500">{err}</p>}
+              {err && <ErrorModal error={err} onClose={() => setErr(null)} />}
               <button
                 type="submit"
                 className="text-font w-fit  px-10 py-1 bg-primary  duration-400  mt-2 rounded-md outline hover:bg-white hover:text-background hover:px-12 cursor-pointer m-auto font-medium"

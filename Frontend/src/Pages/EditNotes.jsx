@@ -4,6 +4,7 @@ import MyEditor from "../Components/MyEditor";
 import api from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import ErrorModal from "../Components/ErrorModal";
 
 const EditNotes = () => {
   const [currentBook, setCurrentBook] = useState();
@@ -11,6 +12,7 @@ const EditNotes = () => {
   // const { currentUser } = useUser();
   const editorRef = useRef();
   const navigate = useNavigate();
+  const [err, setErr] = useState(null);
 
   useEffect(() => {
     async function getNotes() {
@@ -57,6 +59,7 @@ const EditNotes = () => {
       // const isSaved = await
     } catch (error) {
       console.log("Getting error in saving the notes", error);
+      setErr(error.response?.data?.message);
     }
   }
 
@@ -70,6 +73,8 @@ const EditNotes = () => {
     >
       <div className="flex h-screen flex-col font-inter text-font  ">
         <Header />
+        {err && <ErrorModal error={err} onClose={() => setErr(null)} />}
+
         {loading ? (
           <div className="flex flex-col items-center justify-center h-screen text-font bg-background gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-white"></div>

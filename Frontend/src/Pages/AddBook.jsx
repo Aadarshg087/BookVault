@@ -5,10 +5,13 @@ import { useUser } from "../utils/UserContext";
 import api from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import ErrorModal from "../Components/ErrorModal";
 
 const AddBook = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(null);
+
   const {
     register,
     handleSubmit,
@@ -27,6 +30,7 @@ const AddBook = () => {
       }
     } catch (error) {
       console.log(error);
+      setErr(error.response?.data?.message);
     }
     setLoading(false);
   }
@@ -41,6 +45,8 @@ const AddBook = () => {
     >
       <div className="flex flex-col font-inter h-screen">
         <Header />
+        {err && <ErrorModal error={err} onClose={() => setErr(null)} />}
+
         {loading ? (
           <div className="flex flex-col items-center justify-center h-screen text-font bg-background gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-white"></div>

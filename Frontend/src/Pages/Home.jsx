@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Header from "../Components/Header";
 import { Link } from "react-router-dom";
 import api from "../utils/api";
+import ErrorModal from "../Components/ErrorModal";
 
 const Home = () => {
   const { currentUser } = useUser();
@@ -12,6 +13,7 @@ const Home = () => {
   const [categories, setCategories] = useState(["All"]);
   const [currentCategory, setCurrentCategory] = useState("All");
   const [currentSearchString, setCurrentSearchString] = useState("");
+  const [err, setErr] = useState(null);
 
   useEffect(() => {
     // if (!currentUser) return;
@@ -32,6 +34,7 @@ const Home = () => {
         // console.log(bookList.data);
       } catch (error) {
         console.log("Error in getting the books", error);
+        setErr(error.response?.data?.message);
       }
     };
     getBooks();
@@ -46,6 +49,7 @@ const Home = () => {
       setCurrentCategory(currentCat);
     } catch (error) {
       console.log("Got some error in fetching the category books", error);
+      setErr(error.response?.data?.message);
     }
   };
 
@@ -59,6 +63,7 @@ const Home = () => {
       setBookList(resultBooks.data);
     } catch (error) {
       console.log("Got some error fetching searched items: ", error);
+      setErr(error.response?.data?.message);
     }
   };
 
@@ -81,6 +86,7 @@ const Home = () => {
     >
       <div className="flex flex-col h-screen font-inter">
         <Header />
+        {err && <ErrorModal error={err} onClose={() => setErr(null)} />}
         {loading ? (
           <div className="flex flex-col items-center justify-center h-screen text-font bg-background gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-white"></div>

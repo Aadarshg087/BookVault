@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import ErrorModal from "../Components/ErrorModal";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,7 +23,8 @@ const Login = () => {
       localStorage.setItem("userInfo", token);
       navigate("/home");
     } catch (error) {
-      setErr(error);
+      console.log("error: ", error.response.data.message);
+      setErr(error.response?.data?.message);
     }
   }
 
@@ -34,7 +36,7 @@ const Login = () => {
     try {
       await onSubmission(details);
     } catch (error) {
-      setErr(error);
+      setErr(error.response?.data?.message);
     }
   };
 
@@ -45,6 +47,7 @@ const Login = () => {
       exit={{ opacity: 0, y: -20 }} // fade out and move up
       transition={{ duration: 0.4, ease: "easeInOut" }}
     >
+      {err && <ErrorModal error={err} onClose={() => setErr(null)} />}
       <div className="flex flex-col h-screen w-full items-center gap-10 pt-20 font-inter bg-background text-font">
         <h1 className="text-center text-5xl italic font-bold">BookVault</h1>
         <div className="border-1 pt-10 pb-10 flex flex-col items-center   text-center space-y-10 rounded-2xl bg-gradient-to-t from-[#0e0e0e]  to-[#3f3f3f]">
@@ -87,7 +90,6 @@ const Login = () => {
                   </p>
                 )}
               </div>
-              {err && <p className="text-sm text-red-500">{err}</p>}
 
               {/* <button
               type="submit"

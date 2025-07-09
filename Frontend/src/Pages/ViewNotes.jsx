@@ -4,12 +4,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useUser } from "../utils/UserContext";
 import api from "../utils/api";
 import { motion } from "framer-motion";
-import RenderHTML from "../Components/RenderHTML";
+import ErrorModal from "../Components/ErrorModal";
 
 const ViewNotes = () => {
   const [currentBook, setCurrentBook] = useState();
   const { currentUser } = useUser();
   const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,6 +33,7 @@ const ViewNotes = () => {
         }
       } catch (error) {
         console.log("Getting error in fetching the current book: ", error);
+        setErr(error.response?.data?.message);
       }
     }
     getCurrentBook();
@@ -47,6 +49,7 @@ const ViewNotes = () => {
     >
       <div className="flex h-screen flex-col font-inter text-font">
         <Header />
+        {err && <ErrorModal error={err} onClose={() => setErr(null)} />}
         {loading ? (
           <div className="flex flex-col items-center justify-center h-screen text-font bg-background gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-white"></div>
@@ -78,7 +81,6 @@ const ViewNotes = () => {
                   className="prose prose-invert max-w-none bg-bg-light mx-15 my-10 rounded-lg p-10 text-font text-left"
                   dangerouslySetInnerHTML={{ __html: currentBook?.notes }}
                 />
-                // <RenderHTML HTMLcontent={currentBook?.notes} />
               )}
             </div>
           </div>
