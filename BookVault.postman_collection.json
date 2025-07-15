@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "95b6b90e-e1f0-4620-8e2f-9704198b5910",
+		"name": "BookVault",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38042158"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fullName\":\"s\",\r\n    \"email\":\"s@gmail.com\",\r\n    \"password\":\"s@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/users/createUser"
+			},
+			"response": []
+		},
+		{
+			"name": "Validate Token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODUzZGE3NzI5Y2M2YTE2MjlhY2E2MjEiLCJlbWFpbCI6InJhaHVsQGdtYWlsLmNvbSIsImlhdCI6MTc1MDMzNjQ3NSwiZXhwIjoxNzUwMzc5Njc1fQ.-NTq_DCPLjnsz0XhGtn7tJBa6P9wyTqyOSTOsyx3BNU"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODUzZGE3NzI5Y2M2YTE2MjlhY2E2MjEiLCJlbWFpbCI6InJhaHVsQGdtYWlsLmNvbSIsImlhdCI6MTc1MDMzNjQ3NSwiZXhwIjoxNzUwMzc5Njc1fQ.-NTq_DCPLjnsz0XhGtn7tJBa6P9wyTqyOSTOsyx3BNU",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:3000/api/validate-token"
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"charlie@gmail.com\",\r\n    \"password\":\"charlie@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/users/loginUser"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Books",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{TOKEN}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "au",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": "http://localhost:3000/books/getAllBooks"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Book Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODVjN2RlOWIwODc1NDJkZGM5M2ZlMDQiLCJlbWFpbCI6ImNoYXJsaWVAZ21haWwuY29tIiwiZnVsbE5hbWUiOiJDaGFybGllIiwiaWF0IjoxNzUxNjU5NTY5LCJleHAiOjE3NTE3MDI3Njl9.ptqIUYwevPGziI7NP_ObX2mc1w7tQ0FHvJdiufDiqCI"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bookId\" : \"685db76b395145b190c94b90\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/books/bookDetails"
+			},
+			"response": []
+		},
+		{
+			"name": "Save Notes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODVjN2RlOWIwODc1NDJkZGM5M2ZlMDQiLCJlbWFpbCI6ImNoYXJsaWVAZ21haWwuY29tIiwiZnVsbE5hbWUiOiJDaGFybGllIiwiaWF0IjoxNzUxNjU5NTY5LCJleHAiOjE3NTE3MDI3Njl9.ptqIUYwevPGziI7NP_ObX2mc1w7tQ0FHvJdiufDiqCI"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\" : \"685db76b395145b190c94b90\",\r\n    \"notes\":\"<p>This is a test content for editor</p>\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/books/saveNotes"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Categories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{TOKEN}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/books/getAllCategories"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Category Books",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{TOKEN}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"category\" : \"Finance\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/books/getCategoryBooks"
+			},
+			"response": []
+		},
+		{
+			"name": "Search Books",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{TOKEN}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"searchString\": \"Shit\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/books/searchBooks"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "TOKEN",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
