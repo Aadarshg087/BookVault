@@ -17,12 +17,13 @@ jobs:
         run: |
           cd Frontend
           npm install
+
       - name: Some log work
         run: |
           ls -a
-          
+
       - name: Build React application
         run: cd Frontend && npm run build
 
       - name: Verify Build Output
-        run: cd Frontend && ls -la Frontend/dist
+        run: cd Frontend && ls -la dist
