@@ -19,11 +19,7 @@ jobs:
           npm install
 
       - name: Build React application
-        run: |
-          cd Frontend
-          npm run build
+        run: npm run build
 
-      - name: Verfiy Build Output
-        run: |
-          cd Frontend
-          ls -la Frontend/build
+      - name: Verify Build Output
+        run: ls -la Frontend/build
