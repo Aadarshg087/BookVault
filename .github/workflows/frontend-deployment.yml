@@ -17,7 +17,10 @@ jobs:
         run: |
           cd Frontend
           npm install
-
+      - name: Some log work
+        run: |
+          ls -a
+          
       - name: Build React application
         run: cd Frontend && npm run build
 
