@@ -22,4 +22,4 @@ jobs:
         run: cd Frontend && npm run build
 
       - name: Verify Build Output
-        run: cd Frontend && ls -la Frontend/build
+        run: cd Frontend && ls -la Frontend/dist
