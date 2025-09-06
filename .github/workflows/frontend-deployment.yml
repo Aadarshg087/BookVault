@@ -1,0 +1,29 @@
+name: Frontend Deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+
+      - name: Install Dependencies
+        run: |
+          cd Frontend
+          npm install
+
+      - name: Build React application
+        run: |
+          cd Frontend
+          npm run build
+
+      - name: Verfiy Build Output
+        run: |
+          cd Frontend
+          ls -la Frontend/build
