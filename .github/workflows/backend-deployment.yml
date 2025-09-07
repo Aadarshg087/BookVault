@@ -2,14 +2,20 @@ name: Backend Deployment
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
-  #     - dev
+  push:
+    branches:
+      - main
+      - dev
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version-of-node:
+          - 14
+          - 16
+          - 18
 
     steps:
       - name: Repo Checkout
@@ -18,7 +24,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: ${{ matrix.version-of-node }}
 
       - name: Install Dependencies
         run: |
