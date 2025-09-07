@@ -42,6 +42,14 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
 //   Routes
+
+// health api
+app.get("/health", (req, res) => {
+  return res.status(200).json({
+    message: "API is working",
+  });
+});
+
 // auth
 app.get("/api/validate-token", validateToken);
 
