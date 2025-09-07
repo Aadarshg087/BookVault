@@ -37,7 +37,7 @@ jobs:
         run: echo "Hello world, everything is working here"
 
       - name: Deploy via SSH on AWS
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
