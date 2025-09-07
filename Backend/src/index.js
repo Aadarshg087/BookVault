@@ -46,7 +46,7 @@ app.use(
 // health api
 app.get("/health", (req, res) => {
   return res.status(200).json({
-    message: "API is working",
+    message: "API is working !!!",
   });
 });
 
