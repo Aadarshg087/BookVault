@@ -28,6 +28,11 @@ jobs:
           echo "${{ secrets.MONGO_URI }}" >> Backend/.env
           echo "${{ secrets.PORT }}" >> Backend/.env
 
+      - name: Debug secrets
+        run: |
+          echo "Host: ${{ secrets.EC2_HOST }}"
+          echo "User: ${{ secrets.EC2_USER }}"
+
       - name: Install Dependencies
         run: |
           cd Backend
