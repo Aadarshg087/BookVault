@@ -51,6 +51,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
+            cd BookVault
             git pull origin main
             echo "Deploying Backend"
             cd Backend
