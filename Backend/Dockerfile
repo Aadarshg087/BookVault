@@ -2,8 +2,10 @@ FROM node:22
 
 WORKDIR /app
 
-COPY Backend /app
+COPY . /app
 
 RUN npm install
 
-CMD ["npm","run","dev"]
+EXPOSE 3000
+
+CMD ["node", "src/index.js"]
