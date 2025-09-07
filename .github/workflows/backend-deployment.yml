@@ -37,7 +37,7 @@ jobs:
         run: echo "Hello world, everything is working here"
 
       - name: Deploy via SSH on AWS
-        uses: appleboy/ssh-action@v0.1.8
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
@@ -45,6 +45,7 @@ jobs:
           port: 22
           script: |
             git pull origin main
+            echo "Deploying Backend"
             cd Backend
             docker build . -t backend2
             docker run -d -p 3000:3000 backend2
