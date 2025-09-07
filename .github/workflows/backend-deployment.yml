@@ -24,12 +24,6 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
 
-      - name: Create .env file
-        run: |
-          cd BookVault
-          echo "${{ secrets.MONGO_URI }}" >> Backend/.env
-          echo "${{ secrets.PORT }}" >> Backend/.env
-
       - name: Debug secrets
         run: |
           echo "Host: ${{ secrets.EC2_HOST }}"
@@ -55,6 +49,8 @@ jobs:
             cd BookVault
             git pull origin main
             echo "Deploying Backend"
+            echo "${{ secrets.MONGO_URI }}" >> Backend/.env
+            echo "${{ secrets.PORT }}" >> Backend/.env
             cd Backend
             docker build . -t backend2
             docker run -d -p 3000:3000 backend2
