@@ -33,6 +33,7 @@ jobs:
         run: |
           echo "Host: ${{ secrets.EC2_HOST }}"
           echo "User: ${{ secrets.EC2_USER }}"
+          echo "Key: ${{ secrets.EC2_SSH_KEY }}"
 
       - name: Install Dependencies
         run: |
