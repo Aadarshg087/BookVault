@@ -36,8 +36,9 @@ jobs:
           echo "Deploying Backend"
           echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env
           echo "PORT=${{ secrets.PORT }}" >> .env
-          docker build . -t backend3
-          docker run -d -p 3000:3000 backend3
+          sudo apt install -y docker.io
+          sudo docker build . -t backend3
+          sudo docker run -d -p 3000:3000 backend3
 
       # - name: Deploy via SSH on AWS
       #   uses: appleboy/ssh-action@v1
