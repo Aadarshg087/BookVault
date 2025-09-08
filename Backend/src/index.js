@@ -41,7 +41,7 @@ connectDB()
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
-//   Routes
+// Routes
 
 // health api
 app.get("/health", (req, res) => {

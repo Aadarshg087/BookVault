@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment: AWS_backend_deployment
     # strategy:
     #   matrix:
@@ -38,19 +38,28 @@ jobs:
       - name: Checkpoint
         run: echo "Hello world, everything is working here"
 
-      - name: Deploy via SSH on AWS
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          script: |
-            cd BookVault
-            git pull origin main
-            echo "Deploying Backend"
-            echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> Backend/.env
-            echo "PORT=${{ secrets.PORT }}" >> Backend/.env
-            cd Backend
-            docker build . -t backend2
-            docker run -d -p 3000:3000 backend2
+      - name: Run the application
+        run: |
+          cd Backend
+          echo "Deploying Backend"
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env
+          echo "PORT=${{ secrets.PORT }}" >> .env
+          docker build . -t backend3
+          docker run -d -p 3000:3000 backend3
+
+      # - name: Deploy via SSH on AWS
+      #   uses: appleboy/ssh-action@v1
+      #   with:
+      #     host: ${{ secrets.EC2_HOST }}
+      #     username: ${{ secrets.EC2_USER }}
+      #     key: ${{ secrets.EC2_SSH_KEY }}
+      #     port: 22
+      #     script: |
+      #       cd BookVault
+      #       git pull origin main
+      #       echo "Deploying Backend"
+      #       echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> Backend/.env
+      #       echo "PORT=${{ secrets.PORT }}" >> Backend/.env
+      #       cd Backend
+      #       docker build . -t backend2
+      #       docker run -d -p 3000:3000 backend2
