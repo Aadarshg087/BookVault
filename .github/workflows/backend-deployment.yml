@@ -24,7 +24,7 @@ jobs:
       - name: Install Dependencies
         # uses: actions/setup-node@v3
         run: |
-          sudo apt install nodejs
+          sudo apt install -y nodejs
           cd Backend
           npm install
 
