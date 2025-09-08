@@ -21,14 +21,12 @@ jobs:
       - name: Repo Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Node
-        uses: actions/setup-node@v3
-
-      - name: Debug secrets
+      - name: Install Dependencies
+        # uses: actions/setup-node@v3
         run: |
-          echo "Host: ${{ secrets.EC2_HOST }}"
-          echo "User: ${{ secrets.EC2_USER }}"
-          echo "Key: ${{ secrets.EC2_SSH_KEY }}"
+          sudo apt install nodejs
+          cd Backend
+          npm install
 
       - name: Install Dependencies
         run: |
