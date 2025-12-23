@@ -2,15 +2,15 @@ name: Backend Deployment
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
   build:
     runs-on: self-hosted
     environment: AWS_backend_deployment
-    # strategy:
+    # strategy:  
     #   matrix:
     #     version-of-node:
     #       - 14
