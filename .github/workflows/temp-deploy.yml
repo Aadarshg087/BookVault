@@ -42,7 +42,7 @@ jobs:
         run: |
           terraform apply --auto-approve
 
-    #   - name: Terrafrom Destroy
-    #     run: |
-    #       terraform destroy --auto-approve
+      - name: Terrafrom Destroy
+        run: |
+          terraform destroy --auto-approve
           
