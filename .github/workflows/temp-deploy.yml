@@ -38,11 +38,11 @@ jobs:
           terraform init
           terraform validate
           terraform plan
-      # - name: Terraform apply
-      #   run: |
-      #     terraform apply --auto-approve
-
-      - name: Terrafrom Destroy
+      - name: Terraform apply
         run: |
-          terraform destroy --auto-approve
+          terraform apply --auto-approve
+
+    #   - name: Terrafrom Destroy
+    #     run: |
+    #       terraform destroy --auto-approve
           
